@@ -1,0 +1,291 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Every AI Model Included in a Higgsfield Subscription (August 2026)</title>
+<meta name="description" content="The complete list of models bundled into Higgsfield — Seedance 2.0, Kling v3.0, Nano Banana Pro, Seedream 5, FLUX.2 and more — pulled from the API, with the cost math against buying them separately, plus the refund and auto-renewal traps.">
+<link rel="canonical" href="https://REPLACE-WITH-YOUR-URL/">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Every AI Model Included in a Higgsfield Subscription (August 2026)">
+<meta property="og:description" content="Fourteen frontier models on one bill. Here's the full roster, pulled from the API, and what the same models cost bought separately.">
+<meta name="twitter:card" content="summary_large_image">
+<style>
+:root{
+  --bg:#FBFAF8; --card:#FFFFFF; --ink:#14181C; --soft:#3C464E; --mute:#6B7780;
+  --line:#E2E1DC; --line2:#EFEEEA;
+  --accent:#1F5F8B; --accent-bg:#E8F0F6;
+  --good:#2C6B4F; --good-bg:#E5F0EA;
+  --bad:#8C4020; --bad-bg:#F6E9E2;
+  --radius:6px;
+  --sans:ui-sans-serif,system-ui,-apple-system,"Segoe UI",Roboto,Helvetica,Arial,sans-serif;
+  --mono:ui-monospace,SFMono-Regular,"SF Mono",Menlo,Consolas,monospace;
+}
+@media (prefers-color-scheme:dark){
+  :root:not([data-theme="light"]){
+    --bg:#101315; --card:#171B1E; --ink:#E9EDEF; --soft:#BFC8CD; --mute:#8C979D;
+    --line:#2A3236; --line2:#1F2528;
+    --accent:#6FB4DE; --accent-bg:#132732;
+    --good:#77C6A0; --good-bg:#12241C;
+    --bad:#E09975; --bad-bg:#2A1912;
+  }
+}
+:root[data-theme="dark"]{
+  --bg:#101315; --card:#171B1E; --ink:#E9EDEF; --soft:#BFC8CD; --mute:#8C979D;
+  --line:#2A3236; --line2:#1F2528;
+  --accent:#6FB4DE; --accent-bg:#132732;
+  --good:#77C6A0; --good-bg:#12241C;
+  --bad:#E09975; --bad-bg:#2A1912;
+}
+*{box-sizing:border-box}
+body{
+  margin:0;background:var(--bg);color:var(--ink);
+  font-family:var(--sans);font-size:17px;line-height:1.65;
+  -webkit-font-smoothing:antialiased;
+}
+.wrap{max-width:46rem;margin:0 auto;padding:0 1.25rem 5rem}
+header{padding:3.5rem 0 2rem;border-bottom:1px solid var(--line)}
+.eyebrow{font-family:var(--mono);font-size:.72rem;letter-spacing:.14em;text-transform:uppercase;color:var(--accent);font-weight:600;margin:0 0 .9rem}
+h1{font-size:clamp(1.85rem,5vw,2.6rem);line-height:1.12;letter-spacing:-.02em;margin:0 0 1rem;text-wrap:balance;font-weight:700}
+.lede{font-size:1.14rem;color:var(--soft);margin:0}
+.byline{font-family:var(--mono);font-size:.75rem;color:var(--mute);margin:1.25rem 0 0}
+h2{font-size:1.45rem;line-height:1.2;letter-spacing:-.015em;margin:2.75rem 0 .9rem;text-wrap:balance;font-weight:700;scroll-margin-top:1rem}
+h3{font-size:1.08rem;margin:1.9rem 0 .5rem;font-weight:650}
+p{margin:0 0 1.1rem}
+a{color:var(--accent);text-underline-offset:.16em}
+ul{margin:0 0 1.1rem;padding-left:1.15rem}
+li{margin:0 0 .45rem}
+strong{font-weight:650}
+
+.disclosure{
+  margin:1.5rem 0 0;padding:.85rem 1rem;background:var(--card);
+  border:1px solid var(--line);border-left:3px solid var(--mute);
+  border-radius:var(--radius);font-size:.88rem;color:var(--mute);
+}
+.disclosure p{margin:0}
+
+.tablewrap{overflow-x:auto;border:1px solid var(--line);border-radius:var(--radius);background:var(--card);margin:1.4rem 0}
+table{width:100%;border-collapse:collapse;font-size:.88rem;min-width:32rem}
+th{
+  text-align:left;font-family:var(--mono);font-size:.68rem;letter-spacing:.09em;
+  text-transform:uppercase;color:var(--mute);font-weight:600;
+  padding:.75rem 1rem;background:var(--bg);border-bottom:1px solid var(--line);white-space:nowrap;
+}
+td{padding:.65rem 1rem;border-bottom:1px solid var(--line2);color:var(--soft);vertical-align:top}
+td:first-child{color:var(--ink);font-weight:600}
+tr:last-child td{border-bottom:0}
+td.n{font-family:var(--mono);text-align:right;font-variant-numeric:tabular-nums;white-space:nowrap}
+tfoot td{background:var(--bg);border-top:1px solid var(--line);color:var(--ink);font-weight:700}
+
+.verdict{
+  background:var(--accent-bg);border:1px solid var(--accent);
+  border-radius:var(--radius);padding:1.25rem 1.4rem;margin:1.5rem 0;
+}
+.verdict p:last-child{margin-bottom:0}
+.verdict h3{margin-top:0}
+
+.cta{
+  display:inline-block;background:var(--accent);color:var(--bg);
+  font-weight:650;text-decoration:none;padding:.7rem 1.25rem;
+  border-radius:var(--radius);margin:.35rem 0;
+}
+.cta:hover{filter:brightness(1.08)}
+.cta:focus-visible{outline:2px solid var(--ink);outline-offset:2px}
+.cta-note{font-size:.83rem;color:var(--mute);margin:.5rem 0 0}
+
+.cols{display:grid;grid-template-columns:repeat(auto-fit,minmax(15rem,1fr));gap:1rem;margin:1.4rem 0}
+.box{background:var(--card);border:1px solid var(--line);border-radius:var(--radius);padding:1.1rem 1.2rem}
+.box h3{margin:0 0 .5rem;font-size:1rem}
+.box ul{margin:0;padding-left:1.1rem;font-size:.94rem}
+.box.good{border-left:3px solid var(--good)}
+.box.bad{border-left:3px solid var(--bad)}
+.box.good h3{color:var(--good)}
+.box.bad h3{color:var(--bad)}
+
+.toc{background:var(--card);border:1px solid var(--line);border-radius:var(--radius);padding:1rem 1.2rem;margin:2rem 0}
+.toc p{font-family:var(--mono);font-size:.68rem;letter-spacing:.09em;text-transform:uppercase;color:var(--mute);margin:0 0 .5rem}
+.toc ul{margin:0;padding-left:1.1rem;font-size:.94rem}
+
+footer{margin-top:3.5rem;padding-top:1.5rem;border-top:1px solid var(--line);font-size:.85rem;color:var(--mute)}
+footer a{color:var(--mute)}
+</style>
+</head>
+<body>
+<div class="wrap">
+
+<header>
+  <p class="eyebrow">Reference · updated 24 August 2026</p>
+  <h1>Every AI model included in a Higgsfield subscription</h1>
+  <p class="lede">Higgsfield markets itself on camera control, but the thing that actually decides whether it's worth $59 a month is the model roster underneath it. Here is the complete list, pulled from the API rather than the marketing page — and the arithmetic against buying the same models separately.</p>
+  <p class="byline">By Marro · Independent · Verified against a live Plus account</p>
+</header>
+
+<div class="disclosure">
+  <p><strong>Disclosure:</strong> the Higgsfield links on this page are referral links. If you subscribe through one, I earn a commission at no extra cost to you. It doesn't change what's written here — the limitations section below is the part I'd want to read first if I were deciding.</p>
+</div>
+
+<div class="toc">
+  <p>On this page</p>
+  <ul>
+    <li><a href="#roster">The full model roster</a></li>
+    <li><a href="#math">What those models cost separately</a></li>
+    <li><a href="#plans">Which plan makes sense</a></li>
+    <li><a href="#limits">What Higgsfield doesn't do</a></li>
+    <li><a href="#billing">The billing complaints</a></li>
+    <li><a href="#verdict">Who should and shouldn't buy it</a></li>
+  </ul>
+</div>
+
+<h2 id="roster">The full model roster</h2>
+
+<p>Most reviews describe Higgsfield as an AI video generator. That undersells what you're actually buying. It's a front end over a large set of third-party frontier models, and the list is longer than the pricing page suggests. Queried directly against a live Plus subscription in August 2026, these are the models available:</p>
+
+<div class="tablewrap">
+<table>
+  <caption class="visually-hidden" style="position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0 0 0 0)">Models available through a Higgsfield subscription</caption>
+  <thead>
+    <tr><th scope="col">Model</th><th scope="col">Provider</th><th scope="col">Output</th><th scope="col">Notable for</th></tr>
+  </thead>
+  <tbody>
+    <tr><td>Seedance 2.0</td><td>ByteDance</td><td>Video</td><td>4K, native audio, image/video/audio reference inputs, 4–15s</td></tr>
+    <tr><td>Seedance 2.0 Mini</td><td>ByteDance</td><td>Video</td><td>Fast/budget variant, native audio</td></tr>
+    <tr><td>Kling v3.0</td><td>Kling</td><td>Video</td><td>Multi-shot, audio sync, motion transfer, 4K mode</td></tr>
+    <tr><td>Gemini Omni Flash</td><td>Google</td><td>Video</td><td>Reference-driven video with native audio</td></tr>
+    <tr><td>Wan 2.7</td><td>Wan</td><td>Video</td><td>Synchronised audio, character consistency</td></tr>
+    <tr><td>Nano Banana Pro</td><td>Google</td><td>Image</td><td>4K, strong text rendering and diagrams</td></tr>
+    <tr><td>Nano Banana 2</td><td>Google</td><td>Image</td><td>Fast high-quality generation, up to 4K</td></tr>
+    <tr><td>Nano Banana</td><td>Google</td><td>Image</td><td>Budget realistic images</td></tr>
+    <tr><td>Seedream 5.0 Pro</td><td>ByteDance</td><td>Image</td><td>Visual reasoning, instruction editing, inpaint, 2K</td></tr>
+    <tr><td>Seedream 4.5</td><td>ByteDance</td><td>Image</td><td>Up to ~6K on high quality tier</td></tr>
+    <tr><td>FLUX.2</td><td>Black Forest Labs</td><td>Image</td><td>Pro / flex / max variants, prompt adherence</td></tr>
+    <tr><td>GPT Image 2</td><td>OpenAI</td><td>Image</td><td>Up to 4K, typography and text rendering</td></tr>
+    <tr><td>Kling O1 Image</td><td>Kling</td><td>Image</td><td>Photorealistic, wide aspect ratios to 21:9</td></tr>
+    <tr><td>Higgsfield Soul 2.0</td><td>Higgsfield</td><td>Image</td><td>UGC, fashion editorial, character consistency</td></tr>
+    <tr><td>Text to Speech V2</td><td>Higgsfield</td><td>Audio</td><td>Routes to ElevenLabs, MiniMax, Seed Speech, Vibe Voice, Cozy Voice</td></tr>
+    <tr><td>Seed Audio 1.0</td><td>ByteDance</td><td>Audio</td><td>TTS with voice or image reference</td></tr>
+  </tbody>
+</table>
+</div>
+
+<p>There is more beyond this — the platform also carries motion control, upscaling to 4K, outpainting, background removal, reframing, image-to-3D, and a dubbing pipeline. But the model list above is the part that determines whether the subscription replaces other subscriptions, which is the real buying question.</p>
+
+<h2 id="math">What those models cost separately</h2>
+
+<p>Take just two of the sixteen and price them at list, as of August 2026:</p>
+
+<div class="tablewrap">
+<table>
+  <thead>
+    <tr><th scope="col">Bought standalone</th><th scope="col">Plan</th><th scope="col" style="text-align:right">Per month</th></tr>
+  </thead>
+  <tbody>
+    <tr><td>Kling</td><td>Pro tier, 3,000 credits</td><td class="n">$37</td></tr>
+    <tr><td>ElevenLabs</td><td>Creator tier</td><td class="n">$22</td></tr>
+  </tbody>
+  <tfoot>
+    <tr><td colspan="2">Two models, standalone</td><td class="n">$59</td></tr>
+    <tr><td colspan="2">Higgsfield Plus — all sixteen</td><td class="n">$59</td></tr>
+  </tfoot>
+</table>
+</div>
+
+<p>That's the whole argument, and it doesn't need embellishing. Kling Pro plus ElevenLabs Creator costs the same as a Higgsfield Plus subscription that includes both of those engines plus Seedance 2.0, Gemini Omni Flash, Wan 2.7, four Google image models, two Seedream tiers, FLUX.2 and GPT Image 2. Add Runway Pro at $35 monthly and you're past $90 for three tools.</p>
+
+<p>The honest counterweight: credits are the constraint, not access. Higgsfield's 1,200 monthly credits on Plus don't stretch as far as Kling's 3,000 do inside Kling, because every model draws from one shared pool and the expensive models drain it quickly. If you use exactly one model heavily and never touch the others, buying that model directly is usually cheaper. The bundle wins when you switch between models — which, in practice, is what anyone doing real creative work ends up doing, because no single model is best at everything.</p>
+
+<div class="verdict">
+  <h3>The rule of thumb</h3>
+  <p>One model, heavy use, every day → buy that model directly. Two or more models, or you don't yet know which one suits your work → the bundle is cheaper and you stop paying the switching tax.</p>
+  <p style="margin-top:.9rem">
+    <a class="cta" href="https://higgsfield.ai?fpr=marro85" rel="sponsored nofollow noopener" target="_blank">Check current Higgsfield pricing</a>
+  </p>
+  <p class="cta-note">Referral link. Higgsfield runs rolling promotions between roughly 20% and 55% off, so the price you see may be below list.</p>
+</div>
+
+<h2 id="plans">Which plan makes sense</h2>
+
+<div class="tablewrap">
+<table>
+  <thead>
+    <tr><th scope="col">Plan</th><th scope="col" style="text-align:right">Monthly</th><th scope="col" style="text-align:right">Annual/mo</th><th scope="col" style="text-align:right">Credits</th><th scope="col">Model access</th></tr>
+  </thead>
+  <tbody>
+    <tr><td>Starter</td><td class="n">$19</td><td class="n">$19</td><td class="n">270</td><td>Fast and Mini variants only</td></tr>
+    <tr><td>Plus</td><td class="n">$59</td><td class="n">$47</td><td class="n">1,200</td><td>Full lineup</td></tr>
+    <tr><td>Ultra</td><td class="n">$129</td><td class="n">$99</td><td class="n">3,000</td><td>Full lineup</td></tr>
+  </tbody>
+</table>
+</div>
+
+<p>Two things worth knowing before you pick. Credits do not roll over — unused credits reset every month, so paying for Ultra and using half of it is money burned. And Starter's restriction to Fast and Mini model variants matters more than the credit count does: if the reason you're here is the model roster above, Starter doesn't give you most of it.</p>
+
+<p>The pattern that wastes the least money is to start on Plus monthly, watch your actual credit burn for one cycle, then either drop to Starter, move to annual for the roughly 20% discount, or step up to Ultra. Committing annually before you know your burn rate is the most common way people overpay for this category of tool.</p>
+
+<h2 id="limits">What Higgsfield doesn't do</h2>
+
+<p>This is the section that gets left out of most write-ups, and it's the one that causes refunds.</p>
+
+<div class="cols">
+  <div class="box good">
+    <h3>Genuinely strong at</h3>
+    <ul>
+      <li>Directable camera motion — 50+ cinematographer presets for crash zooms, orbits, crane and FPV moves</li>
+      <li>Vertical, feed-native cinematic output</li>
+      <li>Switching between frontier models without switching subscriptions</li>
+      <li>Character and identity consistency across shots</li>
+      <li>An MCP server, so the whole thing is drivable from Claude or another agent</li>
+    </ul>
+  </div>
+  <div class="box bad">
+    <h3>Doesn't do at all</h3>
+    <ul>
+      <li>Captioning for social</li>
+      <li>Reframing per platform automatically</li>
+      <li>Scheduling or publishing (beyond a TikTok connection)</li>
+      <li>Talking-head or persona avatars</li>
+      <li>Carousels, blog posts, newsletters, or any text content</li>
+      <li>Brand-voice governance</li>
+    </ul>
+  </div>
+</div>
+
+<p>Higgsfield is a generator. It stops at export. Everything between "I have a clip" and "it's live and captioned on three platforms" is still your job, and if you're evaluating it as an all-in-one content system you will be disappointed. Budget for that labour, or for a second tool that handles it.</p>
+
+<h2 id="billing">The billing complaints, and how to not get caught</h2>
+
+<p>This is the part of Higgsfield that generates the most anger online, and it has nothing to do with output quality. Two things are worth knowing before you enter a card.</p>
+
+<p><strong>Renewals are not refundable.</strong> Higgsfield's refund policy (Terms of Use §9.3) limits eligibility to your initial purchase. A subscription that auto-renews is out of scope, and support has publicly declined refunds even where the user made contact within an hour and had consumed none of the renewed credits. If the renewal notice lands in spam, that's treated as your problem.</p>
+
+<p><strong>The upgrade pressure is constant.</strong> Countdown timers, personalised discount banners and "unlimited" offers that are unlimited only on specific models for a limited window. The discounts are real — 20% to 55% depending on when you look — but the urgency is manufactured, and there is always another one.</p>
+
+<div class="verdict">
+  <h3>How to test it without getting burned</h3>
+  <ul style="margin:.5rem 0 0;padding-left:1.15rem">
+    <li>Cancel auto-renewal the same day you subscribe. Your paid tier stays active to the end of the cycle — you lose nothing, and you're no longer relying on an email reaching your inbox a month later.</li>
+    <li>Pay with a virtual or single-use card if your bank offers one, and set a limit.</li>
+    <li>If you're in the UK or EEA, statutory 14-day withdrawal rights apply and Higgsfield's own terms carry an EEA/UK carve-out. Cite it if you need to.</li>
+    <li>Never buy annual on day one, whatever the countdown says.</li>
+  </ul>
+</div>
+
+<p>None of this makes the tool bad — the model roster above is real and the bundle math holds. But "good product, aggressive billing" is the accurate summary, and anyone who tells you otherwise while linking you a referral link is selling rather than informing.</p>
+
+<h2 id="verdict">Who should and shouldn't buy it</h2>
+
+<p><strong>Buy it if</strong> you generate across image, video and voice rather than living in one model; if you care about shot-level camera direction rather than accepting whatever motion the model invents; or if you want to drive generation programmatically through the MCP server instead of clicking through a web UI.</p>
+
+<p><strong>Don't buy it if</strong> you need one model heavily and nothing else — buy that model directly. Don't buy it if you need publishing, scheduling or captioning in the same tool, because it doesn't have them. And don't buy the annual plan on day one, whatever discount is being waved at you, until you've watched one month of your own credit consumption.</p>
+
+<p style="margin-top:1.6rem">
+  <a class="cta" href="https://higgsfield.ai?fpr=marro85" rel="sponsored nofollow noopener" target="_blank">See Higgsfield plans and current discount</a>
+</p>
+<p class="cta-note">Referral link — I earn a commission if you subscribe, at no extra cost to you.</p>
+
+<footer>
+  <p><strong>Method and sources.</strong> The model roster was queried directly against a live Higgsfield Plus account in August 2026 and reflects what that account could actually access; availability varies by plan tier and changes as models are added. Higgsfield plan pricing via <a href="https://www.blotato.com/blog/higgsfield-pricing" rel="nofollow noopener">Blotato</a>; Kling pricing via <a href="https://www.eesel.ai/blog/kling-ai-pricing" rel="nofollow noopener">eesel</a>; Runway pricing via <a href="https://www.eesel.ai/blog/runway-ai-pricing" rel="nofollow noopener">eesel</a>; ElevenLabs pricing from <a href="https://elevenlabs.io/pricing" rel="nofollow noopener">elevenlabs.io</a>. AI pricing moves fast — verify current figures before purchasing.</p>
+</footer>
+
+</div>
+</body>
+</html>
