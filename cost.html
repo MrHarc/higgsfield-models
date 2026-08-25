@@ -1,0 +1,324 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Higgsfield Credit Calculator — Real Cost Per Video (2026)</title>
+<meta name="description" content="Work out what a Higgsfield video actually costs. Live credit calculator using Higgsfield's own published credit ratios, plus the plan-vs-topup math and the pricing discrepancies nobody mentions.">
+<link rel="canonical" href="https://mrharc.github.io/higgsfield-models/cost.html">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Higgsfield Credit Calculator — Real Cost Per Video">
+<meta property="og:description" content="How many credits a video actually costs, which plan is cheapest for your volume, and why the 'just use the API' advice is wrong.">
+<style>
+:root{
+  --bg:#FBFAF8; --card:#FFFFFF; --ink:#14181C; --soft:#3C464E; --mute:#6B7780;
+  --line:#E2E1DC; --line2:#EFEEEA;
+  --accent:#1F5F8B; --accent-bg:#E8F0F6;
+  --good:#2C6B4F; --good-bg:#E5F0EA;
+  --bad:#8C4020; --bad-bg:#F6E9E2;
+  --radius:6px;
+  --sans:ui-sans-serif,system-ui,-apple-system,"Segoe UI",Roboto,Helvetica,Arial,sans-serif;
+  --mono:ui-monospace,SFMono-Regular,"SF Mono",Menlo,Consolas,monospace;
+}
+@media (prefers-color-scheme:dark){:root:not([data-theme="light"]){
+  --bg:#101315; --card:#171B1E; --ink:#E9EDEF; --soft:#BFC8CD; --mute:#8C979D;
+  --line:#2A3236; --line2:#1F2528;
+  --accent:#6FB4DE; --accent-bg:#132732;
+  --good:#77C6A0; --good-bg:#12241C;
+  --bad:#E09975; --bad-bg:#2A1912;
+}}
+:root[data-theme="dark"]{
+  --bg:#101315; --card:#171B1E; --ink:#E9EDEF; --soft:#BFC8CD; --mute:#8C979D;
+  --line:#2A3236; --line2:#1F2528;
+  --accent:#6FB4DE; --accent-bg:#132732;
+  --good:#77C6A0; --good-bg:#12241C;
+  --bad:#E09975; --bad-bg:#2A1912;
+}
+*{box-sizing:border-box}
+body{margin:0;background:var(--bg);color:var(--ink);font-family:var(--sans);font-size:17px;line-height:1.65;-webkit-font-smoothing:antialiased}
+.wrap{max-width:46rem;margin:0 auto;padding:0 1.25rem 5rem}
+header{padding:3.5rem 0 2rem;border-bottom:1px solid var(--line)}
+.eyebrow{font-family:var(--mono);font-size:.72rem;letter-spacing:.14em;text-transform:uppercase;color:var(--accent);font-weight:600;margin:0 0 .9rem}
+h1{font-size:clamp(1.85rem,5vw,2.5rem);line-height:1.12;letter-spacing:-.02em;margin:0 0 1rem;text-wrap:balance;font-weight:700}
+.lede{font-size:1.12rem;color:var(--soft);margin:0}
+.byline{font-family:var(--mono);font-size:.75rem;color:var(--mute);margin:1.25rem 0 0}
+h2{font-size:1.4rem;line-height:1.2;letter-spacing:-.015em;margin:2.75rem 0 .9rem;text-wrap:balance;font-weight:700;scroll-margin-top:1rem}
+h3{font-size:1.05rem;margin:1.6rem 0 .5rem;font-weight:650}
+p{margin:0 0 1.1rem}
+a{color:var(--accent);text-underline-offset:.16em}
+ul{margin:0 0 1.1rem;padding-left:1.15rem}
+li{margin:0 0 .45rem}
+strong{font-weight:650}
+.disclosure{margin:1.5rem 0 0;padding:.85rem 1rem;background:var(--card);border:1px solid var(--line);border-left:3px solid var(--mute);border-radius:var(--radius);font-size:.88rem;color:var(--mute)}
+.disclosure p{margin:0}
+
+/* calculator */
+.calc{background:var(--card);border:1px solid var(--line);border-radius:var(--radius);padding:1.5rem;margin:1.75rem 0}
+.field{margin:0 0 1.35rem}
+.field:last-of-type{margin-bottom:.5rem}
+.field label{display:flex;justify-content:space-between;align-items:baseline;gap:1rem;font-weight:650;font-size:.95rem;margin:0 0 .5rem}
+.val{font-family:var(--mono);font-size:1.05rem;color:var(--accent);font-variant-numeric:tabular-nums}
+input[type=range]{width:100%;accent-color:var(--accent);height:1.5rem}
+input[type=range]:focus-visible{outline:2px solid var(--accent);outline-offset:3px}
+.hint{font-size:.82rem;color:var(--mute);margin:.3rem 0 0}
+.seg{display:flex;gap:.4rem;flex-wrap:wrap}
+.seg button{font-family:var(--sans);font-size:.87rem;font-weight:600;padding:.45rem .8rem;border-radius:var(--radius);border:1px solid var(--line);background:var(--bg);color:var(--soft);cursor:pointer}
+.seg button[aria-pressed="true"]{background:var(--accent);border-color:var(--accent);color:var(--bg)}
+.seg button:focus-visible{outline:2px solid var(--accent);outline-offset:2px}
+
+.result{margin:1.5rem 0 0;padding-top:1.4rem;border-top:1px solid var(--line)}
+.headline{display:flex;flex-wrap:wrap;align-items:baseline;gap:.5rem 1rem;margin:0 0 1rem}
+.headline .big{font-family:var(--mono);font-size:2rem;font-weight:600;color:var(--accent);font-variant-numeric:tabular-nums;line-height:1}
+.headline .lbl{font-size:.95rem;color:var(--mute)}
+.rows{display:grid;gap:.4rem}
+.row{display:grid;grid-template-columns:1fr auto auto;gap:.5rem 1rem;align-items:center;padding:.6rem .8rem;border:1px solid var(--line2);border-radius:var(--radius);font-size:.9rem}
+.row.best{border-color:var(--good);background:var(--good-bg)}
+.row .nm{font-weight:650}
+.row .cr{font-family:var(--mono);color:var(--mute);font-size:.82rem;font-variant-numeric:tabular-nums}
+.row .pr{font-family:var(--mono);font-variant-numeric:tabular-nums;font-weight:650;white-space:nowrap}
+.badge{font-family:var(--mono);font-size:.63rem;letter-spacing:.08em;text-transform:uppercase;font-weight:600;padding:.15rem .4rem;border-radius:3px;background:var(--good);color:var(--card);margin-left:.4rem}
+
+.tablewrap{overflow-x:auto;border:1px solid var(--line);border-radius:var(--radius);background:var(--card);margin:1.4rem 0}
+table{width:100%;border-collapse:collapse;font-size:.88rem;min-width:30rem}
+th{text-align:left;font-family:var(--mono);font-size:.68rem;letter-spacing:.09em;text-transform:uppercase;color:var(--mute);font-weight:600;padding:.75rem 1rem;background:var(--bg);border-bottom:1px solid var(--line);white-space:nowrap}
+td{padding:.65rem 1rem;border-bottom:1px solid var(--line2);color:var(--soft)}
+td:first-child{color:var(--ink);font-weight:600}
+tr:last-child td{border-bottom:0}
+td.n{font-family:var(--mono);text-align:right;font-variant-numeric:tabular-nums;white-space:nowrap}
+
+.note{background:var(--accent-bg);border:1px solid var(--accent);border-radius:var(--radius);padding:1.15rem 1.3rem;margin:1.5rem 0}
+.note p:last-child{margin-bottom:0}
+.note h3{margin-top:0}
+.warn{background:var(--bad-bg);border:1px solid var(--bad);border-radius:var(--radius);padding:1.15rem 1.3rem;margin:1.5rem 0}
+.warn p:last-child{margin-bottom:0}
+.warn h3{margin-top:0;color:var(--bad)}
+
+.cta{display:inline-block;background:var(--accent);color:var(--bg);font-weight:650;text-decoration:none;padding:.7rem 1.25rem;border-radius:var(--radius);margin:.35rem 0}
+.cta:hover{filter:brightness(1.08)}
+.cta:focus-visible{outline:2px solid var(--ink);outline-offset:2px}
+.cta-note{font-size:.83rem;color:var(--mute);margin:.5rem 0 0}
+footer{margin-top:3.5rem;padding-top:1.5rem;border-top:1px solid var(--line);font-size:.85rem;color:var(--mute)}
+footer a{color:var(--mute)}
+</style>
+</head>
+<body>
+<div class="wrap">
+
+<header>
+  <p class="eyebrow">Free tool · updated 24 August 2026</p>
+  <h1>Higgsfield credit calculator</h1>
+  <p class="lede">Higgsfield prices everything in credits and never tells you what a video costs in money. This works it out — from their own published credit ratios — and shows which plan is actually cheapest for your volume.</p>
+  <p class="byline">By Marro · <a href="./">See also: every model included in a subscription</a></p>
+</header>
+
+<div class="disclosure">
+  <p><strong>Disclosure:</strong> the Higgsfield link on this page is a referral link — I earn a commission if you subscribe, at no extra cost to you. The calculator does the arithmetic regardless of what it concludes, and on low volumes it will tell you not to subscribe.</p>
+</div>
+
+<h2>Work out your cost</h2>
+
+<div class="calc">
+  <div class="field">
+    <label for="vids">Videos per month <span class="val" id="vidsOut">40</span></label>
+    <input type="range" id="vids" min="0" max="500" step="5" value="40">
+    <p class="hint">A standard 5-second generation. Higgsfield's own figures put this at roughly 6 credits.</p>
+  </div>
+
+  <div class="field">
+    <label for="imgs">Images per month <span class="val" id="imgsOut">200</span></label>
+    <input type="range" id="imgs" min="0" max="4000" step="50" value="200">
+    <p class="hint">Standard image generation, about 0.25 credits. Premium models like Nano Banana Pro run closer to 2.</p>
+  </div>
+
+  <div class="field">
+    <label for="chars">Character generations per month <span class="val" id="charsOut">0</span></label>
+    <input type="range" id="chars" min="0" max="100" step="1" value="0">
+    <p class="hint">The expensive one — 20 to 30 credits each. Leave at zero if you don't use consistent characters.</p>
+  </div>
+
+  <div class="field">
+    <label id="qLabel">Image model mix</label>
+    <div class="seg" role="group" aria-labelledby="qLabel">
+      <button type="button" data-q="0.25" aria-pressed="true">Standard (0.25 cr)</button>
+      <button type="button" data-q="1" aria-pressed="false">Mixed (1 cr)</button>
+      <button type="button" data-q="2" aria-pressed="false">Premium (2 cr)</button>
+    </div>
+  </div>
+
+  <div class="result">
+    <div class="headline">
+      <span class="big" id="credOut">400</span>
+      <span class="lbl">credits per month needed</span>
+    </div>
+    <div class="rows" id="rows"></div>
+    <p class="hint" id="perUnit" style="margin-top:.9rem"></p>
+  </div>
+</div>
+
+<p id="verdict" style="font-size:1.05rem"></p>
+
+<h2>What the numbers are built from</h2>
+
+<p>Every figure below was read directly off a live Higgsfield account in August 2026 rather than taken from a marketing page. Credit ratios are Higgsfield's own published estimates.</p>
+
+<div class="tablewrap">
+<table>
+  <thead><tr><th scope="col">Route</th><th scope="col" class="n">Price</th><th scope="col" class="n">Credits</th><th scope="col" class="n">Per credit</th></tr></thead>
+  <tbody>
+    <tr><td>Plus, annual</td><td class="n">$39/mo</td><td class="n">1,000</td><td class="n">$0.039</td></tr>
+    <tr><td>Plus, monthly</td><td class="n">$49/mo</td><td class="n">1,000</td><td class="n">$0.049</td></tr>
+    <tr><td>Ultra, annual</td><td class="n">$99/mo</td><td class="n">3,000</td><td class="n">$0.033</td></tr>
+    <tr><td>Ultra, monthly</td><td class="n">$129/mo</td><td class="n">3,000</td><td class="n">$0.043</td></tr>
+    <tr><td>Top-up, 4,000</td><td class="n">$190</td><td class="n">4,000</td><td class="n">$0.048</td></tr>
+    <tr><td>Top-up, 2,000</td><td class="n">$95</td><td class="n">2,000</td><td class="n">$0.048</td></tr>
+    <tr><td>Top-up, 1,000</td><td class="n">$49</td><td class="n">1,000</td><td class="n">$0.049</td></tr>
+    <tr><td>Top-up, 500</td><td class="n">$26</td><td class="n">500</td><td class="n">$0.052</td></tr>
+  </tbody>
+</table>
+</div>
+
+<p>Top-up credits expire after <strong>90 days</strong>. Plan credits expire monthly and never roll over. There is no route where unused credits survive.</p>
+
+<h2>Three things their pricing page doesn't tell you</h2>
+
+<div class="warn">
+  <h3>1. The "70% cheaper per credit" claim doesn't hold up</h3>
+  <p>Ultra is marketed as having the lowest cost per credit with a "70% cheaper" badge. Against Plus on the same billing period, Ultra annual works out at $0.033 per credit versus Plus annual at $0.039 — about <strong>15% cheaper, not 70%</strong>. Ultra is still the better per-credit rate; the number attached to it is not one I can reproduce from their own published prices.</p>
+</div>
+
+<div class="warn">
+  <h3>2. Plus is quoted at two different credit amounts</h3>
+  <p>Depending on where you look in Higgsfield's own interface, the Plus plan is described as either <strong>1,000 or 1,200 credits</strong> a month. That's a 20% swing on the thing you're buying. The calculator above uses the conservative 1,000. Check what your account actually shows before assuming the higher number.</p>
+</div>
+
+<div class="warn">
+  <h3>3. Subscribing through the MCP surface can be cheaper than the website</h3>
+  <p>Higgsfield's checkout links served through its MCP integration showed Plus at $49 monthly and $39 annual, while web pricing for the same tier is commonly listed at $59 and $47. Same plan, different entry point. Compare both before you buy — and note that promotional pricing on this platform changes constantly, so verify rather than trusting either number including mine.</p>
+</div>
+
+<h2>"Just use the API instead" — checking that claim</h2>
+
+<p>The standard advice in AI video forums is that Higgsfield is overpriced and you should hit the underlying models directly through an API aggregator, with people quoting figures around 30 cents a video.</p>
+
+<p>Run the numbers and that advice is weaker than it sounds. At roughly 6 credits per video, a 5-second generation costs about <strong>20 cents on Ultra annual</strong> if your volume fits inside the plan, 23 cents on Plus annual, and 29 cents at top-up rates. So the subscription route lands at or below the price the API advocates are quoting — before you count the fact that one subscription covers sixteen models, and that an API workflow is something you have to build and maintain.</p>
+
+<p>The API route genuinely wins in one case: sporadic use. If you generate ten videos a month, no subscription makes sense and pay-as-you-go is obviously right. The crossover is volume, not principle — which is what the calculator above is actually measuring.</p>
+
+<div class="note">
+  <h3>The honest summary</h3>
+  <p>At low volume, don't subscribe to anything — top-ups are cheaper and plan credits expire unused. Somewhere around 100 videos a month a plan starts winning, and past 500 you're into Ultra plus top-ups. The calculator above finds your crossover point rather than guessing at it. Whatever you pick, cancel auto-renewal on day one: Higgsfield's refund policy covers initial purchases only, not renewals.</p>
+  <p style="margin-top:.9rem">
+    <a class="cta" href="https://higgsfield.ai?fpr=marro85" rel="sponsored nofollow noopener" target="_blank">Check current Higgsfield pricing</a>
+  </p>
+  <p class="cta-note">Referral link. Promotions run between roughly 20% and 55% off, so live pricing may be below everything quoted here.</p>
+</div>
+
+<footer>
+  <p><strong>Method.</strong> Plan prices, top-up bundles and credit ratios were read from a live Higgsfield Plus account in August 2026. Credit-per-generation figures are derived from Higgsfield's own published estimates — 1,000 credits described as roughly 200 Kling 3.0 videos and 600 Nano Banana Pro images, 3,000 credits as roughly 500 videos and 1,500 premium images — so they are approximations from the vendor, not measured costs, and real consumption varies with resolution, duration and model. Verify against your own account before making a purchase. Companion page: <a href="./">every AI model included in a Higgsfield subscription</a>.</p>
+</footer>
+
+</div>
+
+<script>
+(function(){
+  var vids=document.getElementById('vids'), imgs=document.getElementById('imgs'), chars=document.getElementById('chars');
+  var vidsOut=document.getElementById('vidsOut'), imgsOut=document.getElementById('imgsOut'), charsOut=document.getElementById('charsOut');
+  var credOut=document.getElementById('credOut'), rows=document.getElementById('rows');
+  var perUnit=document.getElementById('perUnit'), verdict=document.getElementById('verdict');
+  var imgCost=0.25;
+
+  var PLANS=[
+    {name:'Plus, annual',  cr:1000, price:39,  sub:true},
+    {name:'Plus, monthly', cr:1000, price:49,  sub:true},
+    {name:'Ultra, annual', cr:3000, price:99,  sub:true},
+    {name:'Ultra, monthly',cr:3000, price:129, sub:true}
+  ];
+  var TOPUPS=[{cr:500,price:26},{cr:1000,price:49},{cr:2000,price:95},{cr:4000,price:190}];
+
+  function cheapestTopup(need){
+    // allow buying multiples of any single bundle; pick the cheapest total that covers need
+    var best=null;
+    TOPUPS.forEach(function(t){
+      var n=Math.ceil(need/t.cr);
+      var total=n*t.price;
+      if(!best||total<best.total) best={total:total, bundle:t, n:n};
+    });
+    return best;
+  }
+
+  function money(x){ return '$'+(x<10 ? x.toFixed(2) : Math.round(x)); }
+
+  function render(){
+    var v=+vids.value, i=+imgs.value, c=+chars.value;
+    vidsOut.textContent=v; imgsOut.textContent=i; charsOut.textContent=c;
+    var need = v*6 + i*imgCost + c*25;
+    need=Math.round(need);
+    credOut.textContent=need.toLocaleString();
+
+    // Compare everything over a 90-day horizon, because top-up credits expire in 90 days
+    // and plan credits reset monthly. Then divide back down to a monthly figure.
+    var need3 = need*3;
+    var opts=[];
+    PLANS.forEach(function(p){
+      var cr3 = p.cr*3, cost3 = p.price*3;
+      if(need3<=cr3){
+        opts.push({name:p.name, cost:cost3/3, detail:p.cr.toLocaleString()+' cr/mo, covers it'});
+      } else {
+        var extra=cheapestTopup(need3-cr3);
+        opts.push({name:p.name+' + top-ups', cost:(cost3+extra.total)/3,
+          detail:p.cr.toLocaleString()+' cr/mo + '+extra.n+'×'+extra.bundle.cr.toLocaleString()+' per quarter'});
+      }
+    });
+    var pure=cheapestTopup(need3);
+    opts.push({name:'Top-ups only, no plan', cost:pure.total/3, detail:pure.n+'×'+pure.bundle.cr.toLocaleString()+' credits per quarter'});
+
+    opts.sort(function(a,b){return a.cost-b.cost;});
+    var best=opts[0];
+
+    rows.innerHTML='';
+    opts.forEach(function(o,idx){
+      var d=document.createElement('div');
+      d.className='row'+(idx===0?' best':'');
+      d.innerHTML='<span class="nm">'+o.name+(idx===0?'<span class="badge">cheapest</span>':'')+'</span>'+
+                  '<span class="cr">'+o.detail+'</span>'+
+                  '<span class="pr">'+money(o.cost)+'/mo</span>';
+      rows.appendChild(d);
+    });
+
+    if(need===0){
+      perUnit.textContent='';
+      verdict.textContent='Set some volume above and the calculator will tell you what it costs.';
+      return;
+    }
+    var perCredit=best.cost/need;
+    var bits=[];
+    if(v>0) bits.push(money(perCredit*6)+' per video');
+    if(i>0) bits.push('$'+(perCredit*imgCost).toFixed(3)+' per image');
+    if(c>0) bits.push(money(perCredit*25)+' per character generation');
+    perUnit.textContent='On the cheapest route that works out at '+bits.join(', ')+'.';
+
+    if(best.name.indexOf('Top-ups only')===0){
+      verdict.innerHTML='<strong>At this volume, don’t subscribe.</strong> You aren’t generating enough to use up a plan’s credits, and they expire every month whether you touch them or not. Buy top-ups when you actually need them — or use a pay-as-you-go API and skip Higgsfield entirely.';
+    } else if(best.name.indexOf('Plus')===0){
+      verdict.innerHTML='<strong>Plus is your plan.</strong> Take it monthly first and watch one full cycle of real consumption before committing to annual — almost everyone overestimates their burn rate, and the annual discount is not worth locking in a guess.';
+    } else if(need<=3000){
+      verdict.innerHTML='<strong>Ultra is the cheapest route</strong> at this volume, but the gap over Plus-plus-top-ups is usually smaller than the annual commitment is worth. Compare the two figures above before signing up for a year.';
+    } else {
+      verdict.innerHTML='<strong>You are past what any single plan covers.</strong> Ultra plus top-ups is the realistic route. At this scale the per-credit rate is worth an email to Higgsfield rather than paying list price — volume is negotiable and list pricing isn’t designed for you.';
+    }
+  }
+
+  [vids,imgs,chars].forEach(function(el){ el.addEventListener('input', render); });
+  document.querySelectorAll('.seg button').forEach(function(b){
+    b.addEventListener('click', function(){
+      document.querySelectorAll('.seg button').forEach(function(x){x.setAttribute('aria-pressed','false');});
+      b.setAttribute('aria-pressed','true');
+      imgCost=parseFloat(b.dataset.q);
+      render();
+    });
+  });
+  render();
+})();
+</script>
+</body>
+</html>
